@@ -1,0 +1,56 @@
+/* Styles for the comment slider and navigation buttons */
+
+.comment-slider-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.nutrient-vertical-comment-slider {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.7;
+}
+
+.nutrient-vertical-comment-slider:hover {
+  opacity: 1;
+}
+
+/* Comment indicator styles */
+.comment-indicator {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.comment-indicator:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  background-color: #FF7700 !important; /* Brighten on hover */
+}
+
+/* Navigation button hover effects */
+.comment-nav-button {
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.comment-nav-button:hover {
+  background-color: #FF9900 !important;
+}
+
+.comment-nav-button:hover svg {
+  stroke: white !important;
+}
+
+.comment-nav-button:active {
+  transform: scale(0.95);
+}
+
+/* Comment preview popup styles */
+.comment-preview {
+  transition: opacity 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Current page indicator */
+.current-page-indicator {
+  transition: top 0.1s ease-out;
+}
+
+.nutrient-vertical-comment-slider:hover .current-page-indicator {
+  opacity: 0.8;
+}
