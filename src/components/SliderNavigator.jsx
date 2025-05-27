@@ -11,38 +11,25 @@ const SliderNavigator = ({
   scrollElement,
   instance
 })=>{
-  const [currentAnnotationIndex, setCurrentAnnotationIndex] = useState([]);
+  const [currentAnnotationIndex, setCurrentAnnotationIndex] = useState(0);
   const handleCommentIndicatorTopPosition = (index)=>{
     const top = annotations.map(annotation=>annotation?.clientBoundingBox?.top)
 
-    console.log(annotations)
-    return Math.max(1, top[index]) * 1.49
+
+    return (top[index] / scrollElement.scrollHeight) * 100
   }
 
 
-  const goToNextAnnotation = () => {
+  const goToIndex = (index, event) => {
     if (annotations.length === 0) return;
 
-    const nextIndex = (currentAnnotationIndex + 1) % annotations.length; // Wrap around
-    setCurrentAnnotationIndex(nextIndex);
-
+    event.stopPropagation();
+    setCurrentAnnotationIndex(index)
     // Use the annotation's pageIndex, not the array index
-    instance.jumpToRect(annotations[nextIndex].index, annotations[nextIndex].clientBoundingBox);
-    instance.setEditingAnnotation(annotations[nextIndex].id);
+    instance.jumpToRect(annotations[index].pageIndex, annotations[index].clientBoundingBox);
+    instance.setEditingAnnotation(annotations[index].id);
   };
 
-  const goToPreviousAnnotation = () => {
-    if (annotations.length === 0) return;
-
-    const prevIndex = currentAnnotationIndex === 0
-      ? annotations.length - 1
-      : currentAnnotationIndex - 1;
-    setCurrentAnnotationIndex(prevIndex);
-
-    // Use the annotation's pageIndex, not the array index
-    instance.jumpToRect(annotations[prevIndex].index, annotations[prevIndex].clientBoundingBox);
-    instance.setEditingAnnotation(annotations[prevIndex].id);
-  };
 
   return ( <div className="comment-slider-container" style={{ position: 'relative', [position]: 0, top: 0, bottom: 0, width: `${width}px`, zIndex: 2, marginLeft: "10px"}}>
     {/* Navigation buttons at the top (same height as toolbar) */}
@@ -56,7 +43,9 @@ const SliderNavigator = ({
     }}>
       {/* Previous Comment Button */}
       <button
-        onClick={goToPreviousAnnotation}
+        onClick={(e)=>{
+          goToIndex(Math.max(0, currentAnnotationIndex - 1), e)
+        }}
         className="comment-nav-button"
         style={{
           flex: 1,
@@ -90,7 +79,9 @@ const SliderNavigator = ({
 
       {/* Next Comment Button */}
       <button
-        onClick={goToNextAnnotation}
+        onClick={(e)=>{
+          goToIndex(Math.min(annotations.length, currentAnnotationIndex + 1), e)
+        }}
         className="comment-nav-button"
         style={{
           flex: 1,
@@ -144,14 +135,14 @@ const SliderNavigator = ({
       {/* Current page indicator */}
 
       {/* Comment indicators */}
-      {comments?.map((pageComment, index) => (
+      {annotations?.map((pageComment, index) => (
         <div
           key={`comment-${pageComment.pageIndex}-${index}`}
           className="comment-indicator"
           style={{
             position: 'relative',
             left: 0,
-            top:handleCommentIndicatorTopPosition(index),
+            top: handleCommentIndicatorTopPosition(index) + "%",
             width: '100%',
             height: "5px",
             backgroundColor: highlightColor,

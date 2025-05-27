@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef, use} from 'react';
-import EnhancedVerticalCommentSlider from './EnhancedVerticalCommentSlider';
+import VerticalCommentSlider from './VerticalCommentSlider';
 
 const NutrientPDFViewer = (props) => {
   const [instance, setInstance] = useState(null);
@@ -35,14 +35,12 @@ const NutrientPDFViewer = (props) => {
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '90vh', display: 'flex' }}>
+    <div style={{ position: 'relative', width: '100%', height: '90vh', display: 'flex' }}>
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 
       {instance && (
-        <EnhancedVerticalCommentSlider
+        <VerticalCommentSlider
           instance={instance}
-          showPreviews={false}
-          darkMode={props.darkMode}
           toolbarHeight = {toolbarHeightRef.current}
           scrollElement = {scrollElement.current}
         />

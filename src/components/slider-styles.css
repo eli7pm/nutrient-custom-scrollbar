@@ -22,7 +22,6 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
   background-color: #FF7700 !important; /* Brighten on hover */
 }
-
 /* Navigation button hover effects */
 .comment-nav-button {
   transition: background-color 0.2s, transform 0.1s;
