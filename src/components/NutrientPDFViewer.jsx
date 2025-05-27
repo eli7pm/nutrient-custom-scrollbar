@@ -11,14 +11,13 @@ const NutrientPDFViewer = (props) => {
     const container = containerRef.current;
     const {NutrientViewer} = window;
 
-    if(container && NutrientViewer){
+    if (container && NutrientViewer) {
       NutrientViewer?.unload(container);
       NutrientViewer.load({
         container,
-        document: props.document, // Replace with your PDF path
-        // Optional: Enable comment functionality explicitly
+        document: props.document,
         toolbarItems: NutrientViewer.defaultToolbarItems.concat([
-          { type: "comment" }
+          {type: "comment"}
         ])
       }).then(pspdfkitInstance => {
         setInstance(pspdfkitInstance);
@@ -35,14 +34,14 @@ const NutrientPDFViewer = (props) => {
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '90vh', display: 'flex' }}>
-      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+    <div style={{position: 'relative', width: '100%', height: '90vh', display: 'flex'}}>
+      <div ref={containerRef} style={{width: '100%', height: '100%'}}/>
 
       {instance && (
         <VerticalCommentSlider
           instance={instance}
-          toolbarHeight = {toolbarHeightRef.current}
-          scrollElement = {scrollElement.current}
+          toolbarHeight={toolbarHeightRef.current}
+          scrollElement={scrollElement.current}
         />
       )}
     </div>
